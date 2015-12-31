@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block main %}
+<h1>Students</h1>
+<a href="{% url "student_new" %}">New</a>
+<table>
+{% for student in object_list %}
+<tr>
+	<td>
+		{{ student.name }}
+	</td>
+	<td>
+		<a href="{% url "student_edit" student.id %}">{{ student.age }}</a>
+	</td>
+	<td>
+		<a href="{% url "student_delete" student.id %}">delete</a>
+	</td>
+</tr>
+{% endfor %}
+</table>
+
+<a href="javascript:void(0)" id="show_more" url="{% url 'student_show_more' %}"><button>Show More</button></a>
+
+<div id="results"></div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#show_more").click(function(){
+		console.log('Hitting');
+		var this_obj = $(this);
+		$.ajax({
+		url : this_obj.attr('url'), // the endpoint
+		type : "POST", // http method
+		data : {}, // data sent with the post request
+
+		// handle a successful response
+		success : function(json) {
+		    $('#results').val('Done');
+		},
+
+		// handle a non-successful response
+		error : function(xhr,errmsg,err) {
+		    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+		        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+		    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+		}
+		});
+	});
+})
+</script>
+{% endblock main %}

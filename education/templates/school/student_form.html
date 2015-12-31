@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block main %}
+<form method="post" class="form" role="form">{% csrf_token %}
+    {{ form|bootstrap }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock main %}

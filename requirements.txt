@@ -1,1 +1,3 @@
 django==1.7.8
+MySQL-python
+django-bootstrap-form==3.2
